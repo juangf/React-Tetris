@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import Block from './Block';
+import './css/index.css';
+import Block from './components/Block';
 
 ReactDOM.render(<Block />, document.getElementById('root'));
