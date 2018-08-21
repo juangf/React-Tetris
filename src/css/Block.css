@@ -1,10 +1,32 @@
 .Block {
   position: relative;
   width: 100px;
-  height: 100px;
-  background-color: red;
-  border: 10px solid red;
-  border-bottom-color: #a30000;
-  border-right-color: #c20000;
-  border-top-color: #ff5c5c;
-  border-left-color: #ff3d3d; }
+  height: 100px; }
+  .Block.blue {
+    background-color: blue;
+    border: 10px solid blue;
+    border-bottom-color: #0000a3;
+    border-right-color: #0000c2;
+    border-top-color: #5c5cff;
+    border-left-color: #3d3dff; }
+  .Block.red {
+    background-color: red;
+    border: 10px solid red;
+    border-bottom-color: #a30000;
+    border-right-color: #c20000;
+    border-top-color: #ff5c5c;
+    border-left-color: #ff3d3d; }
+  .Block.green {
+    background-color: green;
+    border: 10px solid green;
+    border-bottom-color: #002400;
+    border-right-color: #004300;
+    border-top-color: #00dc00;
+    border-left-color: #00bd00; }
+  .Block.orange {
+    background-color: orange;
+    border: 10px solid orange;
+    border-bottom-color: #a36a00;
+    border-right-color: #c27d00;
+    border-top-color: #ffc55c;
+    border-left-color: #ffbb3d; }
