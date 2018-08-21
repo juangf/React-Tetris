@@ -3,4 +3,8 @@
   width: 100px;
   height: 100px;
   background-color: red;
-}
+  border: 10px solid red;
+  border-bottom-color: #a30000;
+  border-right-color: #c20000;
+  border-top-color: #ff5c5c;
+  border-left-color: #ff3d3d; }

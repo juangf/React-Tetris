@@ -5,4 +5,9 @@ $color: red;
     width: 100px;
     height: 100px;
     background-color: $color;
+    border: 10px solid $color;
+    border-bottom-color: darken($color, 18%);
+    border-right-color: darken($color, 12%);
+    border-top-color: lighten($color, 18%);
+    border-left-color: lighten($color, 12%);
 }
