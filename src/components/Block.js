@@ -4,13 +4,21 @@ import '../css/Block.css';
 class Block extends Component {
 	constructor(props) {
     super(props);
-    console.log(props);
+    this.state = {
+      empty: true
+    }
   }
 
   render() {
-    return (
-      <div className={`Block ${this.props.color}`}></div>
-    );
+    if (this.state.empty) {
+      return (
+        <div className="Block"></div>
+      );
+    } else {
+      return (
+        <div className={`Block ${this.props.color}`}></div>
+      );
+    }
   }
 }
 

@@ -1,32 +1,37 @@
 .Block {
   position: relative;
-  width: 100px;
-  height: 100px; }
+  width: 10%;
+  height: 4.55%;
+  box-shadow: inset 0px 0px 1px #555555; }
   .Block.blue {
     background-color: blue;
-    border: 10px solid blue;
+    border: 0.22em solid blue;
     border-bottom-color: #0000a3;
     border-right-color: #0000c2;
     border-top-color: #5c5cff;
-    border-left-color: #3d3dff; }
+    border-left-color: #3d3dff;
+    box-shadow: none; }
   .Block.red {
     background-color: red;
-    border: 10px solid red;
+    border: 0.22em solid red;
     border-bottom-color: #a30000;
     border-right-color: #c20000;
     border-top-color: #ff5c5c;
-    border-left-color: #ff3d3d; }
+    border-left-color: #ff3d3d;
+    box-shadow: none; }
   .Block.green {
     background-color: green;
-    border: 10px solid green;
+    border: 0.22em solid green;
     border-bottom-color: #002400;
     border-right-color: #004300;
     border-top-color: #00dc00;
-    border-left-color: #00bd00; }
+    border-left-color: #00bd00;
+    box-shadow: none; }
   .Block.orange {
     background-color: orange;
-    border: 10px solid orange;
+    border: 0.22em solid orange;
     border-bottom-color: #a36a00;
     border-right-color: #c27d00;
     border-top-color: #ffc55c;
-    border-left-color: #ffbb3d; }
+    border-left-color: #ffbb3d;
+    box-shadow: none; }

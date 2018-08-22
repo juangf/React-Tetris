@@ -2,17 +2,19 @@ $colors: blue, red, green, orange;
 
 .Block {
     position: relative;
-    width: 100px;
-    height: 100px;
+    width: 10%;
+    height: 4.55%;
+    box-shadow: inset 0px 0px 1px #555555;
 
     @each $color in $colors {
         &.#{$color} {
             background-color: $color;
-            border: 10px solid $color;
+            border: .22em solid $color;
             border-bottom-color: darken($color, 18%);
             border-right-color: darken($color, 12%);
             border-top-color: lighten($color, 18%);
             border-left-color: lighten($color, 12%);
+            box-shadow: none;
         }
     }
 }

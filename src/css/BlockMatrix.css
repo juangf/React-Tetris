@@ -1,0 +1,8 @@
+.BlockMatrix {
+  position: relative;
+  background: #020024;
+  background: linear-gradient(0deg, #020024 23%, #090979 60%, #00d4ff 100%);
+  width: 300px;
+  height: 660px;
+  display: flex;
+  flex-wrap: wrap; }
