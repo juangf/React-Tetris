@@ -4,19 +4,34 @@ import '../css/Block.css';
 class Block extends Component {
 	constructor(props) {
     super(props);
-    this.state = {
-      empty: true
-    }
+    this.colorClasses = [
+      '',
+      'orange',
+      'cyan',
+      'red',
+      'yellow',
+      'magenta',
+      'green',
+      'amber'
+    ]
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    return nextProps.color !== this.props.color;
+  }
+
+  getColorClass(id) {
+    return this.colorClasses[id];
   }
 
   render() {
-    if (this.state.empty) {
+    if (!this.props.color) {
       return (
         <div className="Block"></div>
       );
     } else {
       return (
-        <div className={`Block ${this.props.color}`}></div>
+        <div className={`Block ${this.getColorClass(this.props.color)}`}></div>
       );
     }
   }

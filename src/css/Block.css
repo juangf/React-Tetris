@@ -3,13 +3,21 @@
   width: 10%;
   height: 4.55%;
   box-shadow: inset 0px 0px 1px #555555; }
-  .Block.blue {
-    background-color: blue;
-    border: 0.22em solid blue;
-    border-bottom-color: #0000a3;
-    border-right-color: #0000c2;
-    border-top-color: #5c5cff;
-    border-left-color: #3d3dff;
+  .Block.magenta {
+    background-color: magenta;
+    border: 0.22em solid magenta;
+    border-bottom-color: #a300a3;
+    border-right-color: #c200c2;
+    border-top-color: #ff5cff;
+    border-left-color: #ff3dff;
+    box-shadow: none; }
+  .Block.cyan {
+    background-color: cyan;
+    border: 0.22em solid cyan;
+    border-bottom-color: #00a3a3;
+    border-right-color: #00c2c2;
+    border-top-color: #5cffff;
+    border-left-color: #3dffff;
     box-shadow: none; }
   .Block.red {
     background-color: red;
@@ -19,14 +27,6 @@
     border-top-color: #ff5c5c;
     border-left-color: #ff3d3d;
     box-shadow: none; }
-  .Block.green {
-    background-color: green;
-    border: 0.22em solid green;
-    border-bottom-color: #002400;
-    border-right-color: #004300;
-    border-top-color: #00dc00;
-    border-left-color: #00bd00;
-    box-shadow: none; }
   .Block.orange {
     background-color: orange;
     border: 0.22em solid orange;
@@ -34,4 +34,20 @@
     border-right-color: #c27d00;
     border-top-color: #ffc55c;
     border-left-color: #ffbb3d;
+    box-shadow: none; }
+  .Block.yellow {
+    background-color: yellow;
+    border: 0.22em solid yellow;
+    border-bottom-color: #a3a300;
+    border-right-color: #c2c200;
+    border-top-color: #ffff5c;
+    border-left-color: #ffff3d;
+    box-shadow: none; }
+  .Block.green {
+    background-color: green;
+    border: 0.22em solid green;
+    border-bottom-color: #002400;
+    border-right-color: #004300;
+    border-top-color: #00dc00;
+    border-left-color: #00bd00;
     box-shadow: none; }
