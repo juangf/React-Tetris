@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './css/index.css';
-import BlockMatrix from './components/BlockMatrix';
+import TetrisGame from './components/TetrisGame';
 
-ReactDOM.render(<BlockMatrix />, document.getElementById('root'));
+ReactDOM.render(<TetrisGame rows="22" cols="10" />, document.getElementById('root'));

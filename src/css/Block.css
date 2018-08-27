@@ -1,8 +1,7 @@
 .Block {
   position: relative;
   width: 10%;
-  height: 4.55%;
-  box-shadow: inset 0px 0px 1px #555555; }
+  height: 4.55%; }
   .Block.magenta {
     background-color: magenta;
     border: 0.22em solid magenta;
