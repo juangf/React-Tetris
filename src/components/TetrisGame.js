@@ -7,71 +7,103 @@ class TetrisGame extends Component {
 	constructor(props) {
     super(props);
 
-    this.lastPos = [5, 1];
-    this.pos     = [5 , 1];
-    this.piece   = this.getRandomInt(0, 5);
+    this.lastPos = [5, -1];
+    this.pos     = [5 , -1];
+    this.piece   = this.getPiece(this.getRandomInt(0, 5));
     this.color   = this.getRandomInt(1, 6);
-    this.pieces  = this.getPieces();
-
-    this.state = {
+    this.matrix  = this.buildMatrix(this.props.rows, this.props.cols);
+    this.state   = {
         matrix : this.buildMatrix(this.props.rows, this.props.cols)
     }
 
-    this.matrix = Array.from(this.state.matrix);
+    this.turnPiece = this.turnPiece.bind(this);
+    this.moveLeft  = this.moveLeft.bind(this);
+    this.moveRight = this.moveRight.bind(this);
   }
 
   componentDidMount() {
-    /*
-      this.props.matrix[6][7] = 3;
-      this.props.matrix[4][7] = 1;
-      this.forceUpdate();
-    */
     setInterval(() => {
       this.lastPos[0] = this.pos[0];
       this.lastPos[1] = this.pos[1];
 
-      if (this.pieceCanGoDown()) {
+      if (this.pieceCanGoDown(this.piece)) {
         this.pos[1]++;
-        this.clearPiece();
-        this.drawPiece();
+        this.clearPiece(this.piece, this.lastPos[0], this.lastPos[1]);
+        this.drawPiece(this.piece, this.pos[0], this.pos[1], this.color);
         this.updateMatrix();
       } else {
-        this.freezePiece();
-        this.lastPos = [5, 1];
-        this.pos     = [5 , 1];
-        this.piece   = this.getRandomInt(0, 5);
+        this.freezePiece(this.piece);
+        this.lastPos = [5, -1];
+        this.pos     = [5 , -1];
+        this.piece   = this.getPiece(this.getRandomInt(0, 5));
         this.color   = this.getRandomInt(1, 6);
       }
-    }, 800);
+    }, 500);
+
   }
 
   getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
 
-  pieceCanGoDown() {
-    return !this.pieces[this.piece].find((coord) => {
-      let y = coord[1] + this.pos[1] + 1;
+  pieceCanGoDown(piece) {
+    return !piece.find((coord) => {
+      return !this.isValidPosition(coord[0] + this.pos[0], coord[1] + this.pos[1] + 1);
+    });
+  }
+
+  pieceCanGoLeft(piece) {
+    return !piece.find((coord) => {
+      return !this.isValidPosition(coord[0] + this.pos[0] - 1, coord[1] + this.pos[1]);
+    });
+  }
+
+  pieceCanGoRight(piece) {
+    return !piece.find((coord) => {
+      return !this.isValidPosition(coord[0] + this.pos[0] + 1, coord[1] + this.pos[1]);
+    });
+  }
+
+  pieceCanRotate(piece) {
+    return !piece.find((coord) => {      
+      return !this.isValidPosition(coord[0] + this.pos[0], coord[1] + this.pos[1]);
+    });
+  }
+
+  clearPiece(piece, x, y) {
+    piece.forEach((coord) => {
+      let ny = coord[1] + y;
+      let nx = coord[0] + x;
       
-      return y >= this.props.rows || this.matrix[y][this.pos[0] + coord[0]] < 0;
+      if (this.isValidPosition(nx, ny)) {
+        this.matrix[ny][nx] = 0;
+      }
     });
   }
 
-  clearPiece() {
-    this.pieces[this.piece].map((coord) => {
-      this.matrix[this.lastPos[1] + coord[1]][this.lastPos[0] + coord[0]] = 0;
+  isValidPosition(x, y) {
+    return x >= 0 && x < this.props.cols && y >= 0 && y < this.props.rows && this.matrix[y][x] >= 0;
+  }
+
+  drawPiece(piece, x, y, color) {
+    piece.forEach((coord) => {
+      let nx = x + coord[0];
+      let ny = y + coord[1];
+
+      if (this.isValidPosition(nx, ny)) {
+        this.matrix[ny][nx] = color;
+      }
     });
   }
 
-  drawPiece() {
-    this.pieces[this.piece].map((coord) => {
-      this.matrix[this.pos[1] + coord[1]][this.pos[0] + coord[0]] = this.color;
-    });
-  }
+  freezePiece(piece) {
+    piece.forEach((coord) => {
+      let y = coord[1] + this.pos[1];
+      let x = coord[0] + this.pos[0];
 
-  freezePiece() {
-    this.pieces[this.piece].map((coord) => {
-      this.matrix[this.pos[1] + coord[1]][this.pos[0] + coord[0]] = -this.color;
+      if (this.isValidPosition(x, y)) {
+        this.matrix[y][x] = -this.color;
+      }
     });
   }
 
@@ -92,9 +124,7 @@ class TetrisGame extends Component {
     this.setState({matrix: this.matrix});
   }
 
-  // (x, y) => (-y, x)
-  getPieces() {
-    // Pieces origin and rotation point: x = 0, y = 0
+  getPiece(id) {
     return [
       [
         [-2, 0], [-1, 0], [0, 0], [1, 0]
@@ -123,14 +153,52 @@ class TetrisGame extends Component {
         [-1, -1],[0, -1],
                  [0, 0], [1, 0]
       ]
-    ];
+    ][id];
+  }
+
+  turnPiece() {
+    let turnedPiece = JSON.parse(JSON.stringify(this.piece));
+    
+    turnedPiece.forEach((coord) => {
+        let x = coord[0];
+        coord[0] = -coord[1];
+        coord[1] = x;
+    });
+    
+    if (this.pieceCanRotate(turnedPiece)) {
+        this.clearPiece(this.piece, this.pos[0], this.pos[1]);
+        this.piece = turnedPiece;
+        this.drawPiece(this.piece, this.pos[0], this.pos[1], this.color);
+        this.updateMatrix();
+    }
+  }
+
+  moveLeft() {
+    if (this.pieceCanGoLeft(this.piece)) {
+      this.clearPiece(this.piece, this.pos[0], this.pos[1]);
+      this.pos[0]--;
+      this.drawPiece(this.piece, this.pos[0], this.pos[1], this.color);
+      this.updateMatrix();
+    }
+  }
+
+  moveRight() {
+    if (this.pieceCanGoRight(this.piece)) {
+      this.clearPiece(this.piece, this.pos[0], this.pos[1]);
+      this.pos[0]++;
+      this.drawPiece(this.piece, this.pos[0], this.pos[1], this.color);
+      this.updateMatrix();
+    }
   }
 
   render() {
     return (
       <div className="TetrisGame">
         <BlockMatrix matrix={this.state.matrix} />
-        <Controls />
+        <Controls onTurn={this.turnPiece}
+                  onMoveLeft={this.moveLeft}
+                  onMoveRight={this.moveRight}
+        />
       </div>
     );
   }
