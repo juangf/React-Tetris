@@ -3,7 +3,7 @@ $colors: magenta, cyan, red, orange, yellow, green;
 .Block {
     position: relative;
     width: 10%;
-    height: 4.55%;
+    height: 5%;
     // box-shadow: inset 0px 0px 1px #555555;
 
     @each $color in $colors {

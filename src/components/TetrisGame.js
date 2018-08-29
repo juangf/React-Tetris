@@ -22,6 +22,7 @@ class TetrisGame extends Component {
   }
 
   componentDidMount() {
+    return;
     setInterval(() => {
       this.lastPos[0] = this.pos[0];
       this.lastPos[1] = this.pos[1];
@@ -82,7 +83,11 @@ class TetrisGame extends Component {
   }
 
   isValidPosition(x, y) {
-    return x >= 0 && x < this.props.cols && y >= 0 && y < this.props.rows && this.matrix[y][x] >= 0;
+    return x >= 0 && 
+           x < this.props.cols &&
+           y >= 0 &&
+           y < this.props.rows &&
+           this.matrix[y][x] >= 0;
   }
 
   drawPiece(piece, x, y, color) {
@@ -98,8 +103,8 @@ class TetrisGame extends Component {
 
   freezePiece(piece) {
     piece.forEach((coord) => {
-      let y = coord[1] + this.pos[1];
-      let x = coord[0] + this.pos[0];
+      let y = this.pos[1] + coord[1];
+      let x = this.pos[0] + coord[0];
 
       if (this.isValidPosition(x, y)) {
         this.matrix[y][x] = -this.color;
@@ -194,11 +199,7 @@ class TetrisGame extends Component {
   render() {
     return (
       <div className="TetrisGame">
-        <BlockMatrix matrix={this.state.matrix} />
-        <Controls onTurn={this.turnPiece}
-                  onMoveLeft={this.moveLeft}
-                  onMoveRight={this.moveRight}
-        />
+        <BlockMatrix widthPerc="0.55" matrix={this.state.matrix} />
       </div>
     );
   }
