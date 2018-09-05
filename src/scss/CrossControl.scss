@@ -1,0 +1,31 @@
+$controlSize: 130px;
+$arrowsSizePerc: 33%;
+
+.CrossControl {
+    position: absolute;
+    width: $controlSize;
+    height: $controlSize;
+    
+    .arrow {
+        position: absolute;
+        background: black;
+        width: $arrowsSizePerc;
+        height: $arrowsSizePerc;
+        border-radius: 20%;
+        
+        &.up, &.down {
+            left: 50%;
+            margin-left: -$arrowsSizePerc / 2;
+        }
+        &.down {
+            bottom: 0px;
+        }
+        &.left, &.right {
+            top: 50%;
+            margin-top: -$arrowsSizePerc / 2;
+        }
+        &.right {
+            right: 0px;   
+        }
+    }
+}

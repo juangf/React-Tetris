@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import '../css/TetrisGame.css';
 import BlockMatrix from './BlockMatrix';
-import Controls from './Controls';
+import CrossControl from './CrossControl';
 
 class TetrisGame extends Component {
 	constructor(props) {
@@ -200,6 +200,7 @@ class TetrisGame extends Component {
     return (
       <div className="TetrisGame">
         <BlockMatrix widthPerc="0.55" matrix={this.state.matrix} />
+        <CrossControl />
       </div>
     );
   }

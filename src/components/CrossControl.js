@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import '../css/Controls.css';
+import '../css/CrossControl.css';
 
 class Controls extends Component {
   constructor(props) {
@@ -26,10 +26,11 @@ class Controls extends Component {
 
   render() {
     return (
-      <div className="Controls">
-        <button onClick={this.turnPiece}>Turn</button>
-        <button onClick={this.moveLeft}>Left</button>
-        <button onClick={this.moveRight}>Right</button>
+      <div className="CrossControl">
+        <div className="arrow up"></div>
+        <div className="arrow down"></div>
+        <div className="arrow left"></div>
+        <div className="arrow right"></div>
       </div>
     );
   }

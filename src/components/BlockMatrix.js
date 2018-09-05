@@ -8,7 +8,7 @@ class BlockMatrix extends Component {
   }
   render() {
     let width  = window.innerWidth * this.props.widthPerc;
-    let height = window.innerWidth * this.props.widthPerc * 2.2;
+    let height = window.innerWidth * this.props.widthPerc * 2;
 
     return (
       <div className="BlockMatrix" style={{'height':height + 'px', 'width':width + 'px'}}>
