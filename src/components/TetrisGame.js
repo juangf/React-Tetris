@@ -49,7 +49,7 @@ class TetrisGame extends Component {
 
   pieceCanGoDown(piece) {
     return !piece.find((coord) => {
-      return coord[1] + 1 > 0 && !this.isValidPosition(coord[0] + this.pos[0], coord[1] + this.pos[1] + 1);
+      return coord[1] + this.pos[1] + 1 > 0 && !this.isValidPosition(coord[0] + this.pos[0], coord[1] + this.pos[1] + 1);
     });
   }
 
