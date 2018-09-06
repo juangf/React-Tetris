@@ -16,9 +16,35 @@ class TetrisGame extends Component {
         matrix : this.buildMatrix(this.props.rows, this.props.cols)
     }
 
-    this.turnPiece = this.turnPiece.bind(this);
-    this.moveLeft  = this.moveLeft.bind(this);
-    this.moveRight = this.moveRight.bind(this);
+    this.turnPiece    = this.turnPiece.bind(this);
+    this.moveLeft     = this.moveLeft.bind(this);
+    this.moveLeftEnd  = this.moveLeftEnd.bind(this);
+    this.moveRight    = this.moveRight.bind(this);
+    this.moveRightEnd = this.moveRightEnd.bind(this);
+    this.moveDown     = this.moveDown.bind(this);
+    this.moveDownEnd  = this.moveDownEnd.bind(this);
+
+    this.intervalData = {
+      down : {
+        waitInt    : 0,
+        waitTime   : 300,
+        repeatInt  : 0,
+        repeatTime : 200
+      },
+      left : {
+        waitInt    : 0,
+        waitTime   : 200,
+        repeatInt  : 0,
+        repeatTime : 100
+      },
+      right : {
+        waitInt    : 0,
+        waitTime   : 200,
+        repeatInt  : 0,
+        repeatTime : 100
+      }
+    };
+
   }
 
   componentDidMount() {
@@ -179,21 +205,69 @@ class TetrisGame extends Component {
   }
 
   moveLeft() {
-    if (this.pieceCanGoLeft(this.piece)) {
-      this.clearPiece(this.piece, this.pos[0], this.pos[1]);
-      this.pos[0]--;
-      this.drawPiece(this.piece, this.pos[0], this.pos[1], this.color);
-      this.updateMatrix();
-    }
+    let leftFn = () => {
+      if (this.pieceCanGoLeft(this.piece)) {
+        this.clearPiece(this.piece, this.pos[0], this.pos[1]);
+        this.pos[0]--;
+        this.drawPiece(this.piece, this.pos[0], this.pos[1], this.color);
+        this.updateMatrix();
+      }
+    };
+
+    leftFn();
+
+    this.intervalData.left.waitInt = setTimeout(() => {
+      this.intervalData.left.repeatInt = setInterval(leftFn, this.intervalData.left.repeatTime);
+    }, this.intervalData.left.waitTime);
+  }
+
+  moveLeftEnd() {
+    clearTimeout(this.intervalData.left.waitInt);
+    clearInterval(this.intervalData.left.repeatInt);
   }
 
   moveRight() {
-    if (this.pieceCanGoRight(this.piece)) {
-      this.clearPiece(this.piece, this.pos[0], this.pos[1]);
-      this.pos[0]++;
-      this.drawPiece(this.piece, this.pos[0], this.pos[1], this.color);
-      this.updateMatrix();
-    }
+    let rightFn = () => {
+      if (this.pieceCanGoRight(this.piece)) {
+        this.clearPiece(this.piece, this.pos[0], this.pos[1]);
+        this.pos[0]++;
+        this.drawPiece(this.piece, this.pos[0], this.pos[1], this.color);
+        this.updateMatrix();
+      }
+    };
+    
+    rightFn();
+
+    this.intervalData.right.waitInt = setTimeout(() => {
+      this.intervalData.right.repeatInt = setInterval(rightFn, this.intervalData.right.repeatTime);
+    }, this.intervalData.right.waitTime);
+  }
+
+  moveRightEnd() {
+    clearTimeout(this.intervalData.right.waitInt);
+    clearInterval(this.intervalData.right.repeatInt);
+  }
+
+  moveDown() {
+    let downFn = () => {
+      if (this.pieceCanGoDown(this.piece)) {
+        this.clearPiece(this.piece, this.pos[0], this.pos[1]);
+        this.pos[1]++;
+        this.drawPiece(this.piece, this.pos[0], this.pos[1], this.color);
+        this.updateMatrix();
+      }
+    };
+
+    downFn();
+
+    this.intervalData.down.waitInt = setTimeout(() => {
+      this.intervalData.down.repeatInt = setInterval(downFn, this.intervalData.down.repeatTime);
+    }, this.intervalData.down.waitTime);
+  }
+
+  moveDownEnd() {
+    clearTimeout(this.intervalData.down.waitInt);
+    clearInterval(this.intervalData.down.repeatInt);
   }
 
   render() {
@@ -201,9 +275,12 @@ class TetrisGame extends Component {
       <div className="TetrisGame">
         <BlockMatrix widthPerc="0.55" matrix={this.state.matrix} />
         <CrossControl onUp={this.turnPiece}
-                      onDown={this.turnPiece}
+                      onDown={this.moveDown}
+                      onDownEnd={this.moveDownEnd}
                       onLeft={this.moveLeft}
+                      onLeftEnd={this.moveLeftEnd}
                       onRight={this.moveRight}
+                      onRightEnd={this.moveRightEnd}
         />
       </div>
     );
