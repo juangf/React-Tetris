@@ -12,6 +12,11 @@ $arrowsSizePerc: 33%;
         width: $arrowsSizePerc;
         height: $arrowsSizePerc;
         border-radius: 20%;
+        box-shadow: 1px 1px 6px inset white;
+        
+        &:active {
+            background: grey;
+        }
         
         &.up, &.down {
             left: 50%;

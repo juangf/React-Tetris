@@ -200,7 +200,11 @@ class TetrisGame extends Component {
     return (
       <div className="TetrisGame">
         <BlockMatrix widthPerc="0.55" matrix={this.state.matrix} />
-        <CrossControl />
+        <CrossControl onUp={this.turnPiece}
+                      onDown={this.turnPiece}
+                      onLeft={this.moveLeft}
+                      onRight={this.moveRight}
+        />
       </div>
     );
   }

@@ -7,7 +7,10 @@
     background: black;
     width: 33%;
     height: 33%;
-    border-radius: 20%; }
+    border-radius: 20%;
+    box-shadow: 1px 1px 6px inset white; }
+    .CrossControl .arrow:active {
+      background: grey; }
     .CrossControl .arrow.up, .CrossControl .arrow.down {
       left: 50%;
       margin-left: -16.5%; }
