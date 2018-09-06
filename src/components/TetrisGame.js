@@ -22,7 +22,7 @@ class TetrisGame extends Component {
   }
 
   componentDidMount() {
-    return;
+    //return;
     setInterval(() => {
       this.lastPos[0] = this.pos[0];
       this.lastPos[1] = this.pos[1];
@@ -49,7 +49,7 @@ class TetrisGame extends Component {
 
   pieceCanGoDown(piece) {
     return !piece.find((coord) => {
-      return !this.isValidPosition(coord[0] + this.pos[0], coord[1] + this.pos[1] + 1);
+      return coord[1] + 1 > 0 && !this.isValidPosition(coord[0] + this.pos[0], coord[1] + this.pos[1] + 1);
     });
   }
 

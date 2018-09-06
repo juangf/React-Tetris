@@ -2,7 +2,5 @@
   position: relative;
   background: #020024;
   background: linear-gradient(0deg, #020024 23%, #090979 60%, #00d4ff 100%);
-  /*width: $bmWidthRatio * $size;
-    height: $bmHeightRatio * $size;*/
   display: flex;
   flex-wrap: wrap; }
