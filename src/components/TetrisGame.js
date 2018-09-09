@@ -205,69 +205,40 @@ class TetrisGame extends Component {
   }
 
   moveLeft() {
-    let leftFn = () => {
-      if (this.pieceCanGoLeft(this.piece)) {
-        this.clearPiece(this.piece, this.pos[0], this.pos[1]);
-        this.pos[0]--;
-        this.drawPiece(this.piece, this.pos[0], this.pos[1], this.color);
-        this.updateMatrix();
-      }
-    };
-
-    leftFn();
-
-    this.intervalData.left.waitInt = setTimeout(() => {
-      this.intervalData.left.repeatInt = setInterval(leftFn, this.intervalData.left.repeatTime);
-    }, this.intervalData.left.waitTime);
+    if (this.pieceCanGoLeft(this.piece)) {
+      this.clearPiece(this.piece, this.pos[0], this.pos[1]);
+      this.pos[0]--;
+      this.drawPiece(this.piece, this.pos[0], this.pos[1], this.color);
+      this.updateMatrix();
+    }
   }
 
   moveLeftEnd() {
-    clearTimeout(this.intervalData.left.waitInt);
-    clearInterval(this.intervalData.left.repeatInt);
   }
 
   moveRight() {
-    let rightFn = () => {
-      if (this.pieceCanGoRight(this.piece)) {
-        this.clearPiece(this.piece, this.pos[0], this.pos[1]);
-        this.pos[0]++;
-        this.drawPiece(this.piece, this.pos[0], this.pos[1], this.color);
-        this.updateMatrix();
-      }
-    };
-    
-    rightFn();
-
-    this.intervalData.right.waitInt = setTimeout(() => {
-      this.intervalData.right.repeatInt = setInterval(rightFn, this.intervalData.right.repeatTime);
-    }, this.intervalData.right.waitTime);
+    if (this.pieceCanGoRight(this.piece)) {
+      this.clearPiece(this.piece, this.pos[0], this.pos[1]);
+      this.pos[0]++;
+      this.drawPiece(this.piece, this.pos[0], this.pos[1], this.color);
+      this.updateMatrix();
+    }
   }
 
   moveRightEnd() {
-    clearTimeout(this.intervalData.right.waitInt);
-    clearInterval(this.intervalData.right.repeatInt);
   }
 
   moveDown() {
-    let downFn = () => {
-      if (this.pieceCanGoDown(this.piece)) {
-        this.clearPiece(this.piece, this.pos[0], this.pos[1]);
-        this.pos[1]++;
-        this.drawPiece(this.piece, this.pos[0], this.pos[1], this.color);
-        this.updateMatrix();
-      }
-    };
-
-    downFn();
-
-    this.intervalData.down.waitInt = setTimeout(() => {
-      this.intervalData.down.repeatInt = setInterval(downFn, this.intervalData.down.repeatTime);
-    }, this.intervalData.down.waitTime);
+    if (this.pieceCanGoDown(this.piece)) {
+      this.clearPiece(this.piece, this.pos[0], this.pos[1]);
+      this.pos[1]++;
+      this.drawPiece(this.piece, this.pos[0], this.pos[1], this.color);
+      this.updateMatrix();
+    }
   }
 
   moveDownEnd() {
-    clearTimeout(this.intervalData.down.waitInt);
-    clearInterval(this.intervalData.down.repeatInt);
+
   }
 
   render() {
@@ -281,6 +252,7 @@ class TetrisGame extends Component {
                       onLeftEnd={this.moveLeftEnd}
                       onRight={this.moveRight}
                       onRightEnd={this.moveRightEnd}
+                      repetition="true"
         />
       </div>
     );

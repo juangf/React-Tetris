@@ -1,6 +1,6 @@
 .BlockMatrix {
   position: relative;
   background: #020024;
-  background: linear-gradient(0deg, #020024 23%, #090979 60%, #00d4ff 100%);
+  background: linear-gradient(to bottom, #1e5799 0%, #2989d8 21%, #7db9e8 100%);
   display: flex;
   flex-wrap: wrap; }
