@@ -65,6 +65,8 @@ class TetrisGame extends Component {
 
         if (lines.length) {
           this.clearLines(lines);
+          this.displaceDownMatrix(lines);
+          this.updateMatrix();
         }
 
         this.lastPos = [5, -1];
@@ -80,15 +82,40 @@ class TetrisGame extends Component {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
 
-  clearLines(lines) {
+  displaceDownMatrix(lines) {
+    lines.forEach((y) => {
+      do {
+        for (let x = 0; x < this.props.cols; x++) {
+          this.matrix[y][x] = this.matrix[y - 1][x];
+        }
+      } while (y-- > 1);
 
+      for (let x = 0; x < this.props.cols; x++) {
+        this.matrix[y][x] = 0;
+      }
+    });
+  }
+
+  clearLines(lines) {
+    lines.forEach((y) => {
+      for (let x = 0; x < this.props.cols; x++) {
+        this.matrix[y][x] = 0;
+      }
+    });
   }
 
   checkLines(piece, y) {
     let lines = [];
+    let revisedRows = [];
     piece.forEach((coord) => {
       let colCount = 0;
       let ny = coord[1] + y;
+
+      if (revisedRows.indexOf(ny) > -1) {
+        return;
+      }
+
+      revisedRows.push(ny);
 
       for (let x = 0; x < this.props.cols; x++) {
         if (this.matrix[ny][x] === 0) {
@@ -96,7 +123,7 @@ class TetrisGame extends Component {
         }
         colCount++;
       }
-      if (colCount == this.props.cols && lines.indexOf(ny) === -1) {
+      if (colCount == this.props.cols) {
         lines.push(ny);
       }
     });
