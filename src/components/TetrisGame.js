@@ -24,58 +24,48 @@ class TetrisGame extends Component {
     this.moveDown     = this.moveDown.bind(this);
     this.moveDownEnd  = this.moveDownEnd.bind(this);
 
-    this.intervalData = {
-      down : {
-        waitInt    : 0,
-        waitTime   : 300,
-        repeatInt  : 0,
-        repeatTime : 200
-      },
-      left : {
-        waitInt    : 0,
-        waitTime   : 200,
-        repeatInt  : 0,
-        repeatTime : 100
-      },
-      right : {
-        waitInt    : 0,
-        waitTime   : 200,
-        repeatInt  : 0,
-        repeatTime : 100
-      }
-    };
+    this.gameLoop     = this.gameLoop.bind(this);
+
+    this.speed        = 300;
 
   }
 
   componentDidMount() {
-    //return;
-    setInterval(() => {
-      this.lastPos[0] = this.pos[0];
-      this.lastPos[1] = this.pos[1];
+    this.gameLoop();
+  }
+
+  gameLoop() {
+    this.lastPos[0] = this.pos[0];
+    this.lastPos[1] = this.pos[1];
+
+    if (this.pieceCanGoDown(this.piece)) {
+      this.pos[1]++;
+      this.clearPiece(this.piece, this.lastPos[0], this.lastPos[1]);
+      this.drawPiece(this.piece, this.pos[0], this.pos[1], this.color);
+      this.updateMatrix();
+      setTimeout(this.gameLoop, this.speed);
+    } else {
+      this.freezePiece(this.piece);
+      
+      let lines = this.checkLines(this.piece, this.pos[1]);
+
+      if (lines.length) {
+        this.clearLines(lines);
+        this.displaceDownMatrix(lines);
+        this.updateMatrix();
+      }
+
+      this.lastPos = [5, -1];
+      this.pos     = [5 , -1];
+      this.piece   = this.getPiece(this.getRandomInt(0, 5));
+      this.color   = this.getRandomInt(1, 6);
 
       if (this.pieceCanGoDown(this.piece)) {
-        this.pos[1]++;
-        this.clearPiece(this.piece, this.lastPos[0], this.lastPos[1]);
-        this.drawPiece(this.piece, this.pos[0], this.pos[1], this.color);
-        this.updateMatrix();
+        setTimeout(this.gameLoop, this.speed);
       } else {
-        this.freezePiece(this.piece);
-        
-        let lines = this.checkLines(this.piece, this.pos[1]);
-
-        if (lines.length) {
-          this.clearLines(lines);
-          this.displaceDownMatrix(lines);
-          this.updateMatrix();
-        }
-
-        this.lastPos = [5, -1];
-        this.pos     = [5 , -1];
-        this.piece   = this.getPiece(this.getRandomInt(0, 5));
-        this.color   = this.getRandomInt(1, 6);
+        console.log('game over');
       }
-    }, 500);
-
+    }
   }
 
   getRandomInt(min, max) {
@@ -107,11 +97,12 @@ class TetrisGame extends Component {
   checkLines(piece, y) {
     let lines = [];
     let revisedRows = [];
+    
     piece.forEach((coord) => {
       let colCount = 0;
       let ny = coord[1] + y;
 
-      if (revisedRows.indexOf(ny) > -1) {
+      if (ny < 0 || revisedRows.indexOf(ny) > -1) {
         return;
       }
 
