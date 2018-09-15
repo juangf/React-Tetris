@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import '../css/TetrisGame.css';
 import BlockMatrix from './BlockMatrix';
+import BlockInfo from './BlockInfo';
 import CrossControl from './CrossControl';
 
 class TetrisGame extends Component {
@@ -14,10 +15,10 @@ class TetrisGame extends Component {
     this.matrix  = this.buildMatrix(this.props.rows, this.props.cols);
     this.state   = {
         matrix : this.buildMatrix(this.props.rows, this.props.cols),
-        blinkingRows : [],
+        blinkingLines : [],
         ended  : false,
         paused : false,
-        totalRows : 0
+        totalLines : 0
     }
 
     this.turnPiece    = this.turnPiece.bind(this);
@@ -86,11 +87,11 @@ class TetrisGame extends Component {
 
       if (lines.length) {
         this.setState({
-          blinkingRows : lines,
-          totalRows : this.state.totalRows + lines.length
+          blinkingLines : lines,
+          totalLines : this.state.totalLines + lines.length
         });
         setTimeout(() => {
-          this.setState({blinkingRows : []});
+          this.setState({blinkingLines : []});
           this.clearLines(lines);
           this.displaceDownMatrix(lines);
           this.updateMatrix();
@@ -130,17 +131,17 @@ class TetrisGame extends Component {
 
   checkLines(piece, y) {
     let lines = [];
-    let revisedRows = [];
+    let revisedLines = [];
     
     piece.forEach((coord) => {
       let colCount = 0;
       let ny = coord[1] + y;
 
-      if (ny < 0 || revisedRows.indexOf(ny) > -1) {
+      if (ny < 0 || revisedLines.indexOf(ny) > -1) {
         return;
       }
 
-      revisedRows.push(ny);
+      revisedLines.push(ny);
 
       for (let x = 0; x < this.props.cols; x++) {
         if (this.matrix[ny][x] === 0) {
@@ -326,9 +327,13 @@ class TetrisGame extends Component {
   render() {
     return (
       <div className="TetrisGame">
-        <BlockMatrix widthPerc="0.55"
+        <BlockMatrix widthPerc="0.6"
                      matrix={this.state.matrix}
-                     blinkingRows={this.state.blinkingRows}
+                     blinkingLines={this.state.blinkingLines}
+        />
+        <BlockInfo widthPerc="0.4"
+                   heightPerc="0.2"
+                   value={this.state.totalLines}
         />
         <CrossControl onUp={this.turnPiece}
                       onDown={this.moveDown}
