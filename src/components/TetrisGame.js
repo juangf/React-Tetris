@@ -16,7 +16,8 @@ class TetrisGame extends Component {
         matrix : this.buildMatrix(this.props.rows, this.props.cols),
         blinkingRows : [],
         ended  : false,
-        paused : false
+        paused : false,
+        totalRows : 0
     }
 
     this.turnPiece    = this.turnPiece.bind(this);
@@ -84,7 +85,10 @@ class TetrisGame extends Component {
       };
 
       if (lines.length) {
-        this.setState({blinkingRows : lines});
+        this.setState({
+          blinkingRows : lines,
+          totalRows : this.state.totalRows + lines.length
+        });
         setTimeout(() => {
           this.setState({blinkingRows : []});
           this.clearLines(lines);
