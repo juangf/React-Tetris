@@ -13,7 +13,7 @@ class BlockMatrix extends Component {
     return (
       <div className="BlockMatrix" style={{'height':height + 'px', 'width':width + 'px'}}>
         {this.props.matrix.map((r, i) => r.map((b, j) => 
-          <Block key={i * 10 + j} color={this.props.matrix[i][j]}/>
+          <Block key={i * 10 + j} color={this.props.matrix[i][j]} blink={this.props.blinkingRows.indexOf(i) !== -1}/>
         ))}
       </div>
     );

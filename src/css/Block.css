@@ -50,3 +50,9 @@
     border-top-color: #00dc00;
     border-left-color: #00bd00;
     box-shadow: none; }
+
+@keyframes blinker {
+  50% {
+    opacity: 0; } }
+  .Block.blink {
+    animation: blinker 0.2s linear infinite; }

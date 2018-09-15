@@ -13,7 +13,10 @@ class TetrisGame extends Component {
     this.color   = this.getRandomInt(1, 6);
     this.matrix  = this.buildMatrix(this.props.rows, this.props.cols);
     this.state   = {
-        matrix : this.buildMatrix(this.props.rows, this.props.cols)
+        matrix : this.buildMatrix(this.props.rows, this.props.cols),
+        blinkingRows : [],
+        ended  : false,
+        paused : false
     }
 
     this.turnPiece    = this.turnPiece.bind(this);
@@ -27,11 +30,28 @@ class TetrisGame extends Component {
     this.gameLoop     = this.gameLoop.bind(this);
 
     this.speed        = 300;
-
   }
 
   componentDidMount() {
     this.gameLoop();
+  }
+
+  fillScreen() {
+    let y = this.props.rows - 1;
+
+    var fillScreenFn = () => {
+      for (let x = 0; x < this.props.cols; x++) {
+        this.matrix[y][x] = 3;
+      }
+
+      this.updateMatrix();
+
+      if (--y >= 0) {
+        setTimeout(fillScreenFn, 20);
+      }
+    };
+
+    fillScreenFn();
   }
 
   gameLoop() {
@@ -49,21 +69,31 @@ class TetrisGame extends Component {
       
       let lines = this.checkLines(this.piece, this.pos[1]);
 
+      let preparePieceFn = () => {
+        this.lastPos = [5, -1];
+        this.pos     = [5 , -1];
+        this.piece   = this.getPiece(this.getRandomInt(0, 5));
+        this.color   = this.getRandomInt(1, 6);
+  
+        if (this.pieceCanGoDown(this.piece)) {
+          setTimeout(this.gameLoop, this.speed);
+        } else {
+          this.fillScreen();
+          this.setState({ended : true});
+        }
+      };
+
       if (lines.length) {
-        this.clearLines(lines);
-        this.displaceDownMatrix(lines);
-        this.updateMatrix();
-      }
-
-      this.lastPos = [5, -1];
-      this.pos     = [5 , -1];
-      this.piece   = this.getPiece(this.getRandomInt(0, 5));
-      this.color   = this.getRandomInt(1, 6);
-
-      if (this.pieceCanGoDown(this.piece)) {
-        setTimeout(this.gameLoop, this.speed);
+        this.setState({blinkingRows : lines});
+        setTimeout(() => {
+          this.setState({blinkingRows : []});
+          this.clearLines(lines);
+          this.displaceDownMatrix(lines);
+          this.updateMatrix();
+          preparePieceFn();
+        }, 800);
       } else {
-        console.log('game over');
+        preparePieceFn();
       }
     }
   }
@@ -292,7 +322,10 @@ class TetrisGame extends Component {
   render() {
     return (
       <div className="TetrisGame">
-        <BlockMatrix widthPerc="0.55" matrix={this.state.matrix} />
+        <BlockMatrix widthPerc="0.55"
+                     matrix={this.state.matrix}
+                     blinkingRows={this.state.blinkingRows}
+        />
         <CrossControl onUp={this.turnPiece}
                       onDown={this.moveDown}
                       onDownEnd={this.moveDownEnd}

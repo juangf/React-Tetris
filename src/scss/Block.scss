@@ -17,4 +17,12 @@ $colors: magenta, cyan, red, orange, yellow, green;
             box-shadow: none;
         }
     }
+    
+    @keyframes blinker {  
+        50% { opacity: 0; }
+    }
+
+    &.blink {
+        animation: blinker 0.2s linear infinite;
+    }
 }
