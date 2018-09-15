@@ -333,7 +333,8 @@ class TetrisGame extends Component {
         />
         <BlockInfo widthPerc="0.4"
                    heightPerc="0.2"
-                   value={this.state.totalLines}
+                   lines={this.state.totalLines}
+                   level="0"
         />
         <CrossControl onUp={this.turnPiece}
                       onDown={this.moveDown}
