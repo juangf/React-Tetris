@@ -1,0 +1,14 @@
+.BlockInfo {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  padding: 10px;
+  text-align: center; }
+  .BlockInfo .wrapper {
+    background: #AAA;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #555;
+    box-shadow: inset 3px 3px 3px #888; }
+  .BlockInfo .value {
+    font-size: 1.5em; }

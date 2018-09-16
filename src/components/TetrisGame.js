@@ -18,7 +18,9 @@ class TetrisGame extends Component {
         blinkingLines : [],
         ended  : false,
         paused : false,
-        totalLines : 0
+        totalLines : 0,
+        points : 0,
+        level : 0
     }
 
     this.turnPiece    = this.turnPiece.bind(this);
@@ -30,13 +32,13 @@ class TetrisGame extends Component {
     this.moveDownEnd  = this.moveDownEnd.bind(this);
 
     this.gameLoop     = this.gameLoop.bind(this);
-
-    this.speed        = 300;
+    this.getSpeed     = this.getSpeed.bind(this);
   }
 
   componentDidMount() {
     this.gameLoop();
   }
+  
 
   fillScreen() {
     let y = this.props.rows - 1;
@@ -56,6 +58,10 @@ class TetrisGame extends Component {
     fillScreenFn();
   }
 
+  getSpeed() {
+    return parseInt(400 / (this.state.level/2 + 1));
+  }
+
   gameLoop() {
     this.lastPos[0] = this.pos[0];
     this.lastPos[1] = this.pos[1];
@@ -65,7 +71,7 @@ class TetrisGame extends Component {
       this.clearPiece(this.piece, this.lastPos[0], this.lastPos[1]);
       this.drawPiece(this.piece, this.pos[0], this.pos[1], this.color);
       this.updateMatrix();
-      setTimeout(this.gameLoop, this.speed);
+      setTimeout(this.gameLoop, this.getSpeed());
     } else {
       this.freezePiece(this.piece);
       
@@ -78,18 +84,25 @@ class TetrisGame extends Component {
         this.color   = this.getRandomInt(1, 6);
   
         if (this.pieceCanGoDown(this.piece)) {
-          setTimeout(this.gameLoop, this.speed);
+          setTimeout(this.gameLoop, this.getSpeed());
         } else {
           this.fillScreen();
           this.setState({ended : true});
         }
       };
 
+      let points = this.state.points + this.pos[1];
+
       if (lines.length) {
+        points += this.getPointsPerLines(lines.length, this.state.level);
+        
         this.setState({
           blinkingLines : lines,
-          totalLines : this.state.totalLines + lines.length
+          totalLines : this.state.totalLines + lines.length,
+          points : points,
+          level : parseInt(points / 10)
         });
+
         setTimeout(() => {
           this.setState({blinkingLines : []});
           this.clearLines(lines);
@@ -98,6 +111,10 @@ class TetrisGame extends Component {
           preparePieceFn();
         }, 800);
       } else {
+        this.setState({
+          points : points,
+          level : parseInt(points / 10)
+        });
         preparePieceFn();
       }
     }
@@ -119,6 +136,22 @@ class TetrisGame extends Component {
         this.matrix[y][x] = 0;
       }
     });
+  }
+
+  getPointsPerLines(numLines, level) {
+    // Original Nintendo Scoring System
+    // https://tetris.wiki/Scoring
+    switch (numLines) {
+      case 1 :
+        return 40 * (level + 1);
+      case 2 :
+        return 100 * (level + 1);
+      case 3 :
+        return 300 * (level + 1);
+      case 4 :
+        return 1200 * (level + 1);
+    }
+    return 0;
   }
 
   clearLines(lines) {
@@ -334,7 +367,8 @@ class TetrisGame extends Component {
         <BlockInfo widthPerc="0.4"
                    heightPerc="0.2"
                    lines={this.state.totalLines}
-                   level="0"
+                   level={this.state.level}
+                   points={this.state.points}
         />
         <CrossControl onUp={this.turnPiece}
                       onDown={this.moveDown}

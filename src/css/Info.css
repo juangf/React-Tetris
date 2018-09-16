@@ -1,0 +1,11 @@
+.Info {
+  text-align: center;
+  margin-bottom: 10px; }
+  .Info .wrapper {
+    background: #AAA;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #555;
+    box-shadow: inset 3px 3px 3px #888; }
+  .Info .value {
+    font-size: 1.5em; }
