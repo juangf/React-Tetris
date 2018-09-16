@@ -20,7 +20,7 @@ class Controls extends Component {
         waitInt    : 0,
         waitTime   : 250,
         repeatInt  : 0,
-        repeatTime : 200
+        repeatTime : 100
     };
   }
 

@@ -34,6 +34,8 @@ class TetrisGame extends Component {
     this.gameLoop     = this.gameLoop.bind(this);
     this.getSpeed     = this.getSpeed.bind(this);
 
+    this.pushDown     = false;
+
     this.pointsToUpdateLevel = 1000;
   }
 
@@ -61,7 +63,7 @@ class TetrisGame extends Component {
   }
 
   getSpeed() {
-    return parseInt(400 / (this.state.level/2 + 1));
+    return this.pushDown ? 30 : parseInt(400 / (this.state.level/2 + 1));
   }
 
   gameLoop() {
@@ -347,16 +349,13 @@ class TetrisGame extends Component {
   }
 
   moveDown() {
-    if (this.pieceCanGoDown(this.piece)) {
-      this.clearPiece(this.piece, this.pos[0], this.pos[1]);
-      this.pos[1]++;
-      this.drawPiece(this.piece, this.pos[0], this.pos[1], this.color);
-      this.updateMatrix();
-    }
+    if (this.pushDown) return;
+    this.pushDown = true;
   }
 
   moveDownEnd() {
-
+    if (!this.pushDown) return;
+    this.pushDown = false;
   }
 
   render() {
