@@ -33,6 +33,8 @@ class TetrisGame extends Component {
 
     this.gameLoop     = this.gameLoop.bind(this);
     this.getSpeed     = this.getSpeed.bind(this);
+
+    this.pointsToUpdateLevel = 1000;
   }
 
   componentDidMount() {
@@ -100,7 +102,7 @@ class TetrisGame extends Component {
           blinkingLines : lines,
           totalLines : this.state.totalLines + lines.length,
           points : points,
-          level : parseInt(points / 10)
+          level : parseInt(points / this.pointsToUpdateLevel)
         });
 
         setTimeout(() => {
@@ -113,7 +115,7 @@ class TetrisGame extends Component {
       } else {
         this.setState({
           points : points,
-          level : parseInt(points / 10)
+          level : parseInt(points / this.pointsToUpdateLevel)
         });
         preparePieceFn();
       }
