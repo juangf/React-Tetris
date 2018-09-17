@@ -355,6 +355,14 @@ class TetrisGame extends Component {
 
   moveDownEnd() {
     if (!this.pushDown) return;
+
+    if (this.pieceCanGoDown(this.piece)) {
+      this.clearPiece(this.piece, this.pos[0], this.pos[1]);
+      this.pos[1]++;
+      this.drawPiece(this.piece, this.pos[0], this.pos[1], this.color);
+      this.updateMatrix();
+    }
+    
     this.pushDown = false;
   }
 
