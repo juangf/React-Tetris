@@ -102,7 +102,7 @@ class TetrisGame extends Component {
           blinkingLines : lines,
           totalLines : this.state.totalLines + lines.length,
           points : points,
-          level : this.calcLevel(points, this.state.level)
+          level : this.calcLevel(points)
         });
 
         setTimeout(() => {
@@ -115,7 +115,7 @@ class TetrisGame extends Component {
       } else {
         this.setState({
           points : points,
-          level : this.calcLevel(points, this.state.level)
+          level : this.calcLevel(points)
         });
         preparePieceFn();
       }
@@ -156,8 +156,8 @@ class TetrisGame extends Component {
     return 0;
   }
 
-  calcLevel(points, level) {
-    return parseInt(points / (1000 * (level + 1)));
+  calcLevel(points) {
+    return parseInt(points / 5000);
   }
 
   clearLines(lines) {
