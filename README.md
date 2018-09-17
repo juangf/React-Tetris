@@ -5,4 +5,4 @@ This is a version of Tetris made in React to play in smartphones.
 Try it here:
 http://test.binatree.com/react-tetris/
 
-![Image of React-Tetris](http://test.binatree.com/react-tetris/tetris_screenshot.png|width=300)
+<img src="http://test.binatree.com/react-tetris/tetris_screenshot.png" alt="Image of React-Tetris" width="300px">
