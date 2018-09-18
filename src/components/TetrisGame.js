@@ -47,7 +47,7 @@ class TetrisGame extends Component {
 
     var fillScreenFn = () => {
       for (let x = 0; x < this.props.cols; x++) {
-        this.matrix[y][x] = 3;
+        this.matrix[y][x] = -3;
       }
 
       this.updateMatrix();
