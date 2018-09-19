@@ -11,7 +11,7 @@ class BlockInfo extends Component {
     let width  = window.innerWidth * this.props.widthPerc;
 
     return (
-      <div className="BlockInfo" style={{'width':width + 'px'}} >
+      <div className="BlockInfo" style={{'width':width}} >
         <Info title="Score" value={this.props.points} />
         <Info title="Lines" value={this.props.lines} />
         <Info title="Level" value={this.props.level} />

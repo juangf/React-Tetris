@@ -369,9 +369,13 @@ class TetrisGame extends Component {
   }
 
   render() {
+    let bmWidth  = window.innerWidth * 0.6;
+    let bmHeight = window.innerWidth * 0.6 * 2;
+
     return (
       <div className="TetrisGame">
-        <BlockMatrix widthPerc="0.6"
+        <BlockMatrix height={bmHeight}
+                     width={bmWidth}
                      matrix={this.state.matrix}
                      blinkingLines={this.state.blinkingLines}
         />
@@ -381,7 +385,8 @@ class TetrisGame extends Component {
                    level={this.state.level}
                    points={this.state.points}
         />
-        <CrossControl onUp={this.turnPiece}
+        <CrossControl top={bmHeight}
+                      onUp={this.turnPiece}
                       onDown={this.moveDown}
                       onDownEnd={this.moveDownEnd}
                       onLeft={this.moveLeft}

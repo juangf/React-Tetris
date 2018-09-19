@@ -7,11 +7,8 @@ class BlockMatrix extends Component {
     super(props);
   }
   render() {
-    let width  = window.innerWidth * this.props.widthPerc;
-    let height = window.innerWidth * this.props.widthPerc * 2;
-
     return (
-      <div className="BlockMatrix" style={{'height':height + 'px', 'width':width + 'px'}}>
+      <div className="BlockMatrix" style={{'height':this.props.height + 'px', 'width':this.props.width + 'px'}}>
         {this.props.matrix.map((r, i) => r.map((b, j) => 
           <Block key={i * 10 + j} color={this.props.matrix[i][j]} blink={this.props.blinkingLines.indexOf(i) !== -1}/>
         ))}

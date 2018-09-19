@@ -109,7 +109,7 @@ class Controls extends Component {
 
   render() {
     return (
-      <div className="CrossControl">
+      <div className="CrossControl" style={{top:this.props.top}}>
         <div className="arrow up"    onTouchStart={this.onUp}    onTouchEnd={this.onUpEnd}></div>
         <div className="arrow down"  onTouchStart={this.onDown}  onTouchEnd={this.onDownEnd}></div>
         <div className="arrow left"  onTouchStart={this.onLeft}  onTouchEnd={this.onLeftEnd}></div>
