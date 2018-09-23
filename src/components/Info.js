@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import '../css/Info.css';
 
 class Info extends Component {
-  
+
   shouldComponentUpdate(nextProps, nextState) {
     return !(
       this.props.title === nextProps.title &&

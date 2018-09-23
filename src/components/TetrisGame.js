@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import '../css/TetrisGame.css';
+import { buildMatrix, getRandomInt } from '../helpers.js';
 import BlockMatrix from './BlockMatrix';
 import BlockInfo from './BlockInfo';
 import CrossControl from './CrossControl';
@@ -10,17 +11,17 @@ class TetrisGame extends Component {
 
     this.lastPos = [5, -1];
     this.pos     = [5 , -1];
-    this.color   = this.getRandomInt(1, 6);
-    this.matrix  = this.buildMatrix(this.props.rows, this.props.cols);
+    this.color   = getRandomInt(1, 6);
+    this.matrix  = buildMatrix(this.props.rows, this.props.cols);
     this.state   = {
-        matrix : this.buildMatrix(this.props.rows, this.props.cols),
+        matrix : buildMatrix(this.props.rows, this.props.cols),
         blinkingLines : [],
         ended  : false,
         paused : false,
         totalLines : 0,
         points : 0,
         level : 0,
-        pieceType : this.getRandomInt(0, 5)
+        pieceType : getRandomInt(0, 5)
     }
 
     this.piece        = this.getPiece(this.state.pieceType);
@@ -84,9 +85,9 @@ class TetrisGame extends Component {
       let preparePieceFn = () => {
         this.lastPos = [5, -1];
         this.pos     = [5 , -1];
-        this.setState({pieceType: this.getRandomInt(0, 5)});
+        this.setState({pieceType: getRandomInt(0, 5)});
         this.piece   = this.getPiece(this.state.pieceType);
-        this.color   = this.getRandomInt(1, 6);
+        this.color   = getRandomInt(1, 6);
   
         if (this.pieceCanGoDown(this.piece)) {
           setTimeout(this.gameLoop, this.getSpeed());
@@ -123,10 +124,6 @@ class TetrisGame extends Component {
         preparePieceFn();
       }
     }
-  }
-
-  getRandomInt(min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
   }
 
   displaceDownMatrix(lines) {
@@ -263,19 +260,6 @@ class TetrisGame extends Component {
         this.matrix[y][x] = -this.color;
       }
     });
-  }
-
-  buildMatrix(rows, cols) {
-    let m = [];
-
-    for (let i = 0; i < rows; i++) {
-      m.push([]);
-      for (let j = 0; j < cols; j++) {
-        m[i].push(0);
-      }
-    };
-
-    return m;
   }
 
   updateMatrix() {
