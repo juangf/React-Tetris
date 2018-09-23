@@ -20,7 +20,7 @@ class BlockInfo extends Component {
         <Info title="Score" value={this.props.points} />
         <Info title="Lines" value={this.props.lines} />
         <Info title="Level" value={this.props.level} />
-        <Info title="Next Piece" value={this.props.pieceType} />
+        <Info title="Next Piece" value={this.props.pieceType} isPiece="1" />
       </div>
     );
   }

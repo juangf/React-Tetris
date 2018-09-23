@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import '../css/TetrisGame.css';
-import { buildMatrix, getRandomInt } from '../helpers.js';
+import { buildMatrix, getRandomInt, getPiece } from '../helpers.js';
 import BlockMatrix from './BlockMatrix';
 import BlockInfo from './BlockInfo';
 import CrossControl from './CrossControl';
@@ -24,7 +24,7 @@ class TetrisGame extends Component {
         pieceType : getRandomInt(0, 5)
     }
 
-    this.piece        = this.getPiece(this.state.pieceType);
+    this.piece        = getPiece(this.state.pieceType);
 
     this.turnPiece    = this.turnPiece.bind(this);
     this.moveLeft     = this.moveLeft.bind(this);
@@ -86,7 +86,7 @@ class TetrisGame extends Component {
         this.lastPos = [5, -1];
         this.pos     = [5 , -1];
         this.setState({pieceType: getRandomInt(0, 5)});
-        this.piece   = this.getPiece(this.state.pieceType);
+        this.piece   = getPiece(this.state.pieceType);
         this.color   = getRandomInt(1, 6);
   
         if (this.pieceCanGoDown(this.piece)) {
@@ -266,38 +266,6 @@ class TetrisGame extends Component {
     this.setState({matrix: this.matrix});
   }
 
-  getPiece(id) {
-    return [
-      [
-        [-2, 0], [-1, 0], [0, 0], [1, 0]
-      ],
-      [
-        [-1, -1],
-        [-1, 0], [0, 0], [1, 0]
-      ],
-      [
-                         [1, -1],
-        [-1, 0], [0, 0], [1, 0]
-      ],
-      [
-        [0, 0], [1, 0],
-        [0, 1], [1, 1]
-      ],
-      [
-                [0, -1], [1, -1],
-        [-1, 0], [0, 0]
-      ],
-      [
-                 [0, -1],
-        [-1, 0], [0, 0], [1, 0]
-      ],
-      [
-        [-1, -1],[0, -1],
-                 [0, 0], [1, 0]
-      ]
-    ][id];
-  }
-
   turnPiece() {
     let turnedPiece = JSON.parse(JSON.stringify(this.piece));
     
@@ -365,6 +333,8 @@ class TetrisGame extends Component {
       <div className="TetrisGame">
         <BlockMatrix height={bmHeight}
                      width={bmWidth}
+                     cols={this.props.cols}
+                     rows={this.props.rows}
                      matrix={this.state.matrix}
                      blinkingLines={this.state.blinkingLines}
         />

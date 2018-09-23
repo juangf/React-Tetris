@@ -17,7 +17,7 @@ class Block extends Component {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    return nextProps.color !== Math.abs(this.props.color);
+    return Math.abs(nextProps.color) !== Math.abs(this.props.color);
   }
 
   getColorClass(id) {
@@ -27,11 +27,11 @@ class Block extends Component {
   render() {
     if (!this.props.color) {
       return (
-        <div className={`Block ${this.props.blink ? ' blink' : ''}`}></div>
+        <div style={{width:this.props.width, height:this.props.height}} className={`Block${this.props.blink ? ' blink' : ''}`}></div>
       );
     } else {
       return (
-        <div className={`Block ${this.getColorClass(Math.abs(this.props.color))} ${this.props.blink ? ' blink' : ''}`}></div>
+        <div style={{width:this.props.width, height:this.props.height}} className={`Block ${this.getColorClass(Math.abs(this.props.color))}${this.props.blink ? ' blink' : ''}`}></div>
       );
     }
   }
