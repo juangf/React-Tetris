@@ -2,8 +2,12 @@ import React, { Component } from 'react';
 import '../css/Info.css';
 
 class Info extends Component {
-	constructor(props) {
-    super(props);
+  
+  shouldComponentUpdate(nextProps, nextState) {
+    return !(
+      this.props.title === nextProps.title &&
+      this.props.value === nextProps.value
+    );
   }
 
   render() {

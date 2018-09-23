@@ -10,7 +10,6 @@ class TetrisGame extends Component {
 
     this.lastPos = [5, -1];
     this.pos     = [5 , -1];
-    this.piece   = this.getPiece(this.getRandomInt(0, 5));
     this.color   = this.getRandomInt(1, 6);
     this.matrix  = this.buildMatrix(this.props.rows, this.props.cols);
     this.state   = {
@@ -20,8 +19,11 @@ class TetrisGame extends Component {
         paused : false,
         totalLines : 0,
         points : 0,
-        level : 0
+        level : 0,
+        pieceType : this.getRandomInt(0, 5)
     }
+
+    this.piece        = this.getPiece(this.state.pieceType);
 
     this.turnPiece    = this.turnPiece.bind(this);
     this.moveLeft     = this.moveLeft.bind(this);
@@ -61,7 +63,7 @@ class TetrisGame extends Component {
   }
 
   getSpeed() {
-    return this.pushDown ? 30 : parseInt(400 / (this.state.level/2 + 1));
+    return this.pushDown ? 30 : parseInt(400 / (this.state.level/2 + 1), 10);
   }
 
   gameLoop() {
@@ -82,7 +84,8 @@ class TetrisGame extends Component {
       let preparePieceFn = () => {
         this.lastPos = [5, -1];
         this.pos     = [5 , -1];
-        this.piece   = this.getPiece(this.getRandomInt(0, 5));
+        this.setState({pieceType: this.getRandomInt(0, 5)});
+        this.piece   = this.getPiece(this.state.pieceType);
         this.color   = this.getRandomInt(1, 6);
   
         if (this.pieceCanGoDown(this.piece)) {
@@ -152,12 +155,13 @@ class TetrisGame extends Component {
         return 300 * (level + 1);
       case 4 :
         return 1200 * (level + 1);
+      default:
     }
     return 0;
   }
 
   calcLevel(points) {
-    return parseInt(points / 5000);
+    return parseInt(points / 5000, 10);
   }
 
   clearLines(lines) {
@@ -169,8 +173,9 @@ class TetrisGame extends Component {
   }
 
   checkLines(piece, y) {
-    let lines = [];
+    let lines        = [];
     let revisedLines = [];
+    let numCols      = parseInt(this.props.cols, 10);
     
     piece.forEach((coord) => {
       let colCount = 0;
@@ -182,13 +187,13 @@ class TetrisGame extends Component {
 
       revisedLines.push(ny);
 
-      for (let x = 0; x < this.props.cols; x++) {
+      for (let x = 0; x < numCols; x++) {
         if (this.matrix[ny][x] === 0) {
           break;
         }
         colCount++;
       }
-      if (colCount == this.props.cols) {
+      if (colCount === numCols) {
         lines.push(ny);
       }
     });
@@ -384,6 +389,7 @@ class TetrisGame extends Component {
                    lines={this.state.totalLines}
                    level={this.state.level}
                    points={this.state.points}
+                   piece={this.state.pieceType}
         />
         <CrossControl top={bmHeight}
                       onUp={this.turnPiece}

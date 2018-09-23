@@ -24,6 +24,10 @@ class Controls extends Component {
     };
   }
 
+  shouldComponentUpdate(nextProps, nextState) {
+    return false;
+  }
+
   setRepetition(fn) {
     this.repetitionData.waitInt = setTimeout(() => {
       this.repetitionData.repeatInt = setInterval(fn, this.repetitionData.repeatTime);
