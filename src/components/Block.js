@@ -9,10 +9,10 @@ class Block extends Component {
       'orange',
       'cyan',
       'red',
-      'yellow',
       'magenta',
+      'amber',
       'green',
-      'amber'
+      'yellow'
     ];
   }
 

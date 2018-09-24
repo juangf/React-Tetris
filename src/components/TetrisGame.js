@@ -11,7 +11,6 @@ class TetrisGame extends Component {
 
     this.lastPos = [5, -1];
     this.pos     = [5 , -1];
-    this.color   = getRandomInt(1, 6);
     this.matrix  = buildMatrix(this.props.rows, this.props.cols);
     this.state   = {
         matrix : buildMatrix(this.props.rows, this.props.cols),
@@ -24,7 +23,8 @@ class TetrisGame extends Component {
         pieceType : getRandomInt(0, 5)
     }
 
-    this.piece        = getPiece(this.state.pieceType);
+    this.piece = getPiece(this.state.pieceType);
+    this.color = this.state.pieceType + 1;
 
     this.turnPiece    = this.turnPiece.bind(this);
     this.moveLeft     = this.moveLeft.bind(this);
@@ -87,7 +87,7 @@ class TetrisGame extends Component {
         this.pos     = [5 , -1];
         this.setState({pieceType: getRandomInt(0, 5)});
         this.piece   = getPiece(this.state.pieceType);
-        this.color   = getRandomInt(1, 6);
+        this.color   = this.state.pieceType + 1;
   
         if (this.pieceCanGoDown(this.piece)) {
           setTimeout(this.gameLoop, this.getSpeed());

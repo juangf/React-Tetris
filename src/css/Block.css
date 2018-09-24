@@ -1,5 +1,6 @@
 .Block {
-  position: relative; }
+  position: relative;
+  box-shadow: inset 0px 0px 1px #555555; }
   .Block.magenta {
     background-color: magenta;
     border: 0.22em solid magenta;
