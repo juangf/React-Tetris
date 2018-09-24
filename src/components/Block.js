@@ -6,13 +6,13 @@ class Block extends Component {
     super(props);
     this.colorClasses = [
       '',
-      'orange',
+      'yellow',
       'cyan',
       'red',
+      'orange',
       'magenta',
-      'amber',
       'green',
-      'yellow'
+      'amber'
     ];
   }
 
