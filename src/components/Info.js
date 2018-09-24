@@ -15,11 +15,10 @@ class Info extends Component {
   render() {
     let width  = window.innerWidth * this.props.widthPerc;
     let height = window.innerWidth * this.props.heightPerc;
-    let matrix = null;
+    let matrix = buildMatrix(5, 5);
 
     if (this.props.isPiece) {
       let piece = getPiece(this.props.value);
-      matrix = buildMatrix(5, 5);
 
       piece.forEach((coord) => {
         let y = coord[1] + 2;
@@ -27,9 +26,6 @@ class Info extends Component {
   
         matrix[y][x] = this.props.value + 1;
       });
-      
-    } else {
-      matrix = buildMatrix(5, 5);
     }
 
     return (
