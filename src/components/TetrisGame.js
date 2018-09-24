@@ -20,7 +20,8 @@ class TetrisGame extends Component {
         totalLines : 0,
         points : 0,
         level : 0,
-        pieceType : getRandomInt(0, 5)
+        pieceType : getRandomInt(0, 5),
+        nextPieceType : getRandomInt(0, 5)
     }
 
     this.piece = getPiece(this.state.pieceType);
@@ -85,7 +86,10 @@ class TetrisGame extends Component {
       let preparePieceFn = () => {
         this.lastPos = [5, -1];
         this.pos     = [5 , -1];
-        this.setState({pieceType: getRandomInt(0, 5)});
+        this.setState({
+          pieceType : this.state.nextPieceType,
+          nextPieceType: getRandomInt(0, 5)
+        });
         this.piece   = getPiece(this.state.pieceType);
         this.color   = this.state.pieceType + 1;
   
@@ -343,7 +347,7 @@ class TetrisGame extends Component {
                    lines={this.state.totalLines}
                    level={this.state.level}
                    points={this.state.points}
-                   piece={this.state.pieceType}
+                   pieceType={this.state.nextPieceType}
         />
         <CrossControl top={bmHeight}
                       onUp={this.turnPiece}
