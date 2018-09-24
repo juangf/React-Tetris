@@ -17,7 +17,10 @@ class Block extends Component {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    return Math.abs(nextProps.color) !== Math.abs(this.props.color);
+    return !(
+      nextProps.blink === this.props.blink &&
+      Math.abs(nextProps.color) === Math.abs(this.props.color)
+    )
   }
 
   getColorClass(id) {
