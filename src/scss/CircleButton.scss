@@ -1,0 +1,21 @@
+$controlSize: 50px;
+
+.CircleButton {
+    position: absolute;
+    width: $controlSize;
+    height: $controlSize;
+    background: red;
+    border-radius: 50%;
+    border: 1px solid #b31d1d;
+    text-align: center;
+    font-size: 1em;
+    box-shadow: 1px 1px 6px inset #f5b1b1;
+    line-height: $controlSize * 2.4;
+    user-select: none;
+    transform:rotate(-35deg);
+    text-shadow: -1px -1px 0px black;
+    color: #999;
+    &:active {
+        box-shadow: inset 0px 0px 5px brown;
+    }
+}

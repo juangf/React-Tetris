@@ -6,4 +6,15 @@
         left: 5%;
         margin-top: 5%;
     }
+    .CircleButton {
+        margin-top: 20%;
+        right: 25px;
+
+        &.a {
+            margin-right: 60px;
+        }
+        &.b {
+            margin-top: 10%;
+        }
+    }
 }

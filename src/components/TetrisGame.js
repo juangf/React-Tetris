@@ -4,6 +4,7 @@ import { buildMatrix, getRandomInt, getPiece } from '../helpers.js';
 import BlockMatrix from './BlockMatrix';
 import BlockInfo from './BlockInfo';
 import CrossControl from './CrossControl';
+import CircleButton from './CircleButton';
 
 class TetrisGame extends Component {
 	constructor(props) {
@@ -27,7 +28,6 @@ class TetrisGame extends Component {
     this.piece = getPiece(this.state.pieceType);
     this.color = this.state.pieceType + 1;
 
-    this.turnPiece    = this.turnPiece.bind(this);
     this.moveLeft     = this.moveLeft.bind(this);
     this.moveLeftEnd  = this.moveLeftEnd.bind(this);
     this.moveRight    = this.moveRight.bind(this);
@@ -270,13 +270,19 @@ class TetrisGame extends Component {
     this.setState({matrix: this.matrix});
   }
 
-  turnPiece() {
+  turnPiece(direction) {
     let turnedPiece = JSON.parse(JSON.stringify(this.piece));
     
     turnedPiece.forEach((coord) => {
-        let x = coord[0];
-        coord[0] = -coord[1];
-        coord[1] = x;
+        if (direction > 0) {
+          let x = coord[0];
+          coord[0] = -coord[1];
+          coord[1] = x;
+        } else {
+          let y = coord[1];
+          coord[1] = -coord[0];
+          coord[0] = y;
+        }
     });
     
     if (this.pieceCanRotate(turnedPiece)) {
@@ -350,13 +356,25 @@ class TetrisGame extends Component {
                    pieceType={this.state.nextPieceType}
         />
         <CrossControl top={bmHeight}
-                      onUp={this.turnPiece}
+                      onUp={this.turnPiece.bind(this, 1)}
                       onDown={this.moveDown}
                       onDownEnd={this.moveDownEnd}
                       onLeft={this.moveLeft}
                       onLeftEnd={this.moveLeftEnd}
                       onRight={this.moveRight}
                       onRightEnd={this.moveRightEnd}
+                      repetition="true"
+        />
+        <CircleButton title="A"
+                      class="a"
+                      top={bmHeight}
+                      onPress={this.turnPiece.bind(this, 1)}
+                      repetition="true"
+        />
+        <CircleButton title="B"
+                      class="b"
+                      top={bmHeight}
+                      onPress={this.turnPiece.bind(this, -1)}
                       repetition="true"
         />
       </div>

@@ -5,3 +5,10 @@
   .TetrisGame .CrossControl {
     left: 5%;
     margin-top: 5%; }
+  .TetrisGame .CircleButton {
+    margin-top: 20%;
+    right: 25px; }
+    .TetrisGame .CircleButton.a {
+      margin-right: 60px; }
+    .TetrisGame .CircleButton.b {
+      margin-top: 10%; }
